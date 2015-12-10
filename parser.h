@@ -6,7 +6,7 @@
 
 #include "global.h"
 
-namespace lexer {
+namespace parser {
 
   /// ExprAST is the base class for all expression nodes
   class ExprAST {
@@ -19,7 +19,7 @@ namespace lexer {
     double Val;
 
   public:
-    DoubleExprAST(double val) : Val(val) {}
+    DoubleExprAST(double val) : Val(val) { }
   };
 
   /// VariableExprAST is the expression class for referencing a variable
@@ -27,7 +27,7 @@ namespace lexer {
     std::string Name;
 
   public:
-    VariableExprAST(const std::string& name) : Name(name) {}
+    VariableExprAST(const std::string &name) : Name(name) { }
   };
 
   /// BinaryExprAST is the expression class for a binary operator
@@ -38,7 +38,7 @@ namespace lexer {
   public:
     BinaryExprAST(char op, std::unique_ptr<ExprAST> lhs,
                   std::unique_ptr<ExprAST> rhs)
-                  : Op(op), LHS(std::move(lhs)), RHS(std::move(rhs)) {}
+      : Op(op), LHS(std::move(lhs)), RHS(std::move(rhs)) { }
   };
 
 
