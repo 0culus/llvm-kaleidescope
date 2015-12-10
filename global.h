@@ -22,4 +22,6 @@ namespace helper {
 };
 }
 
+static std::string IdentifierStr; // filled if tok_identifier
+static double DoubleVal; // filled if tok_double
 
