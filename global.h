@@ -22,6 +22,19 @@ namespace helper {
 };
 }
 
+/**
+ * Here we define all the tokens we need; add to this to add more!
+ */
+enum class Token {
+	tok_eof = -1,
+
+	tok_def = -2,
+	tok_extern = -3,
+
+	tok_identifier = -4,
+	tok_double = -5
+};
+
 static std::string IdentifierStr; // filled if tok_identifier
 static double DoubleVal; // filled if tok_double
 
