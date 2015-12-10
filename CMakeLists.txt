@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 project(llvm_kaleidescope)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -g -Wall")
 
-set(SOURCE_FILES lexer.cpp global.h)
+set(SOURCE_FILES lexer.cpp global.h parser.cpp parser.h driver.cpp)
 add_executable(llvm_kaleidescope ${SOURCE_FILES})
