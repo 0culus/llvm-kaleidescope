@@ -35,6 +35,16 @@ enum class Token {
   tok_double = -5
 };
 
+// lexer things
 static std::string IdentifierStr; // filled if tok_identifier
 static double DoubleVal; // filled if tok_double
+static int GetTok();
+
+// parser things
+static int CurTok;
+
+static int GetNextToken() { return CurTok = GetTok(); }
+
+// manage precedence for binary operators
+static std::map<char, int> BinOpPrecedence;
 
