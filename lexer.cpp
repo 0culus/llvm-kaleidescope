@@ -53,31 +53,31 @@ static int GetTok() {
 	}
 
 	// number: [0-9]+
-	if (isdigit(LastChar) || LastChar == '.') {
+	if ( isdigit( LastChar ) || LastChar == '.' ) {
 		std::string NumStr;
 
 		do {
 			NumStr += LastChar;
 			LastChar = getchar();
-		} while (isdigit(LastChar) || LastChar == '.');
+		} while ( isdigit( LastChar ) || LastChar == '.' );
 
-		DoubleVal = strtod(NumStr.c_str(), nullptr);
+		DoubleVal = strtod( NumStr.c_str(), nullptr );
 		return static_cast<int>(Token::tok_double);
 	}
 
 	// comment till end of line
-	if (LastChar == '#') {
+	if ( LastChar == '#' ) {
 		do {
 			LastChar = getchar();
-		} while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
+		} while ( LastChar != EOF && LastChar != '\n' && LastChar != '\r' );
 
-		if (LastChar != EOF) {
+		if ( LastChar != EOF ) {
 			return GetTok();
 		}
 	}
 
 	// check for EOF condition
-	if (LastChar == EOF) {
+	if ( LastChar == EOF ) {
 		return static_cast<int>(Token::tok_eof);
 	}
 
