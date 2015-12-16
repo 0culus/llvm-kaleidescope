@@ -12,7 +12,7 @@
  * GetTok returns the next token from stdin. We can improve this
  * later with actual regex.
  */
-static int GetTok() {
+int GetTok() {
   static int LastChar = ' ';
 
   // eat whitespace for lunch
