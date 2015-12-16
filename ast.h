@@ -6,7 +6,9 @@
 
 #include "global.h"
 
-namespace parser {
+// this is our Abstract Syntax Tree (AST)
+
+namespace ast {
 
   /// ExprAST is the base class for all expression nodes
   class ExprAST {
