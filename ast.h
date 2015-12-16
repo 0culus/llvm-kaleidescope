@@ -43,5 +43,36 @@ namespace ast {
       : Op(op), LHS(std::move(lhs)), RHS(std::move(rhs)) { }
   };
 
+  /// CallExprAST is the expression class for function calls
+  class CallExprAST : public ExprAST {
+    std::string Callee;
+    std::vector<std::unique_ptr<ExprAST>> Args;
 
+  public:
+    CallExprAST(const std::string& callee,
+                std::vector<std::unique_ptr<ExprAST>> args)
+      : Callee(callee), Args(std::move(args)) { }
+  };
+
+  /// PrototypeAST captures the function prototype; name, names of arguments. This
+  /// implicity deals with the argcount.
+  class PrototypeAST {
+    std::string Name;
+    std::vector<std::string> Args;
+
+  public:
+    PrototypeAST(const std::string& name, std::vector<std::string> args)
+      : Name(name), Args(args) { }
+  };
+
+  // FunctionAST represents a function definition itself
+  class FunctionAST {
+    std::unique_ptr<PrototypeAST> Prototype;
+    std::unique_ptr<ExprAST> Body;
+
+  public:
+    FunctionAST(std::unique_ptr<PrototypeAST> proto,
+                std::unique_ptr<ExprAST> body)
+      : Prototype(std::move(proto)), Body(std::move(body)) { }
+  };
 }
