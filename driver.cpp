@@ -9,11 +9,11 @@
 static void MainLoop() {
   while (1) {
     std::cout << "ready> " << std::endl;
-    switch (CurTok) {
+    switch (parser::CurTok) {
       case static_cast<int>(Token::tok_eof):
         return;
       case ';':
-        GetNextToken(); // ignoring toplevel semicolons
+        parser::GetNextToken(); // ignoring toplevel semicolons
         break;
       case static_cast<int>(Token::tok_def):
         //HandleDefinition();
@@ -35,7 +35,7 @@ int main() {
   BinOpPrecedence['*'] = 40;
 
   // get first token
-  //getNextToken()
+  parser::GetNextToken();
 
   // for now we will just call our MainLoop() function
   MainLoop();

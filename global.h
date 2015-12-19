@@ -36,14 +36,19 @@ enum class Token {
 };
 
 // lexer things
-std::string IdentifierStr; // filled if tok_identifier
-double DoubleVal; // filled if tok_double
-int GetTok();
+// for now, we place these things in their own namespaces
+// to at the very least, avoid global namespace pollution
+namespace lexer {
+  std::string IdentifierStr; // filled if tok_identifier
+  double DoubleVal; // filled if tok_double
+  int GetTok();
+}
 
 // parser things
-int CurTok;
-
-int GetNextToken() { return CurTok = GetTok(); }
+namespace parser {
+  int CurTok;
+  int GetNextToken() { return CurTok = lexer::GetTok(); }
+}
 
 // manage precedence for binary operators
 std::map<char, int> BinOpPrecedence;

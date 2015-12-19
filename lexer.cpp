@@ -23,16 +23,16 @@ int GetTok() {
 
   // identifier: [a-zA-Z][a-zA-Z0-9]*
   if (isalpha(LastChar)) {
-    IdentifierStr = LastChar;
+    lexer::IdentifierStr = LastChar;
 
     while (isalnum((LastChar = getchar()))) {
-      IdentifierStr = LastChar;
+      lexer::IdentifierStr = LastChar;
     }
 
-    if (IdentifierStr == "def") {
+    if (lexer::IdentifierStr == "def") {
       return static_cast<int>(Token::tok_def);
     }
-    if (IdentifierStr == "extern") {
+    if (lexer::IdentifierStr == "extern") {
       return static_cast<int>(Token::tok_extern);
     }
     return static_cast<int>(Token::tok_identifier);
@@ -47,7 +47,7 @@ int GetTok() {
       LastChar = getchar();
     } while (isdigit(LastChar) || LastChar == '.');
 
-    DoubleVal = strtod(NumStr.c_str(), nullptr);
+    lexer::DoubleVal = strtod(NumStr.c_str(), nullptr);
     return static_cast<int>(Token::tok_double);
   }
 
