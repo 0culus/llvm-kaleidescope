@@ -120,7 +120,17 @@ namespace parser {
   int GetNextToken() { return CurTok = lexer::GetTok(); }
 
   /// Error handlers
-  std::unique_ptr<ast::ExprAST>
+  std::unique_ptr<ast::ExprAST> Error(const std::string& errstr) {
+    std::cout << "Error: " << errstr << std::endl;
+
+    return nullptr;
+  }
+
+  std::unique_ptr<ast::PrototypeAST> ErrorProto(const std::string& errstr) {
+    Error(errstr);
+
+    return nullptr;
+  }
 }
 
 // manage precedence for binary operators
