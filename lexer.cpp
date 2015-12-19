@@ -11,6 +11,7 @@
 /**
  * GetTok returns the next token from stdin. We can improve this
  * later with actual regex.
+ * @TODO: made this better OO style
  */
 int GetTok() {
   static int LastChar = ' ';
