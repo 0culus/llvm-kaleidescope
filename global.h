@@ -137,6 +137,9 @@ namespace parser {
 
   std::unique_ptr<ast::PrototypeAST> ErrorProto(const std::string& errstr);
 
+  /// Expression ::= primary BinOpRHS
+  std::unique_ptr<ast::ExprAST> ParseExpression(State& state);
+
   /// Now we handle our grammar productions.
   /// Each production has a function to parse it.
 
@@ -145,6 +148,28 @@ namespace parser {
 
   /// ParenExpr ::= '(' expression ')'
   std::unique_ptr<ast::ExprAST> ParseParenExpr(State& state);
+
+  /// IndentifierExpr ::= Identifier | Identifier '(' expression* ')'
+  std::unique_ptr<ast::ExprAST> ParseIdentifierExpr(State& state);
+
+  /// Primary ::= IdentifierExpr
+  ///         ::= NumberExpr
+  ///         ::= ParenExpr
+  std::unique_ptr<ast::ExprAST> ParsePrimary(State& state);
+
+  /// Prototype ::= id '(' id* ')'
+  std::unique_ptr<ast::PrototypeAST> ParsePrototype(State& state);
+
+  /// Definition ::= 'def' Prototype Expression
+  std::unique_ptr<ast::FunctionAST> ParseDefinition(State& state);
+
+  /// TopLevelExpr ::= Expression
+  std::unique_ptr<ast::FunctionAST> ParseTopLevelExpr(State& state);
+
+  /// External ::= 'extern' Prototype
+  std::unique_ptr<ast::PrototypeAST> ParseExtern(State& state);
+
+  /// Now we handle top level parsing
 }
 
 
