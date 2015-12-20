@@ -6,6 +6,7 @@
 
 #include "global.h"
 
+/// Top ::= Definition | External | Expression | ';'
 static void MainLoop(State& state) {
   while (1) {
     std::cout << "ready> " << std::endl;
@@ -16,13 +17,13 @@ static void MainLoop(State& state) {
         parser::GetNextToken(state); // ignoring toplevel semicolons
         break;
       case static_cast<int>(Token::tok_def):
-        //HandleDefinition();
+        parser::HandleDefinition(state);
         break;
       case static_cast<int>(Token::tok_extern):
-        //HandleExtern();
+        parser::HandleExtern(state);
         break;
       default:
-        //HandleTopLevelExpr();
+        parser::HandleTopLevelExpr(state);
         break;
     }
   }
