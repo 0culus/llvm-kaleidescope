@@ -170,6 +170,11 @@ namespace parser {
   std::unique_ptr<ast::PrototypeAST> ParseExtern(State& state);
 
   /// Now we handle top level parsing
+  void HandleDefinition(State& state);
+  void HandleExtern(State& state);
+  void HandleTopLevelExpr(State& state);
+
+  // rest of this is MainLoop() in driver.cpp
 }
 
 
