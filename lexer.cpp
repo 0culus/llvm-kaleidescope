@@ -13,7 +13,7 @@
  * later with actual regex.
  * @TODO: made this better OO style
  */
-int GetTok() {
+int lexer::GetTok(State& state) {
   static int LastChar = ' ';
 
   // eat whitespace for lunch
@@ -23,16 +23,16 @@ int GetTok() {
 
   // identifier: [a-zA-Z][a-zA-Z0-9]*
   if (isalpha(LastChar)) {
-    lexer::IdentifierStr = LastChar;
+    state.IdentifierStr = LastChar;
 
     while (isalnum((LastChar = getchar()))) {
-      lexer::IdentifierStr = LastChar;
+      state.IdentifierStr = LastChar;
     }
 
-    if (lexer::IdentifierStr == "def") {
+    if (state.IdentifierStr == "def") {
       return static_cast<int>(Token::tok_def);
     }
-    if (lexer::IdentifierStr == "extern") {
+    if (state.IdentifierStr == "extern") {
       return static_cast<int>(Token::tok_extern);
     }
     return static_cast<int>(Token::tok_identifier);
@@ -47,7 +47,7 @@ int GetTok() {
       LastChar = getchar();
     } while (isdigit(LastChar) || LastChar == '.');
 
-    lexer::DoubleVal = strtod(NumStr.c_str(), nullptr);
+    state.DoubleVal = strtod(NumStr.c_str(), nullptr);
     return static_cast<int>(Token::tok_double);
   }
 
@@ -58,7 +58,7 @@ int GetTok() {
     } while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
 
     if (LastChar != EOF) {
-      return GetTok();
+      return GetTok(state);
     }
   }
 

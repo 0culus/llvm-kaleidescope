@@ -6,14 +6,14 @@
 
 #include "global.h"
 
-static void MainLoop() {
+static void MainLoop(State& state) {
   while (1) {
     std::cout << "ready> " << std::endl;
-    switch (parser::CurTok) {
+    switch (state.CurTok) {
       case static_cast<int>(Token::tok_eof):
         return;
       case ';':
-        parser::GetNextToken(); // ignoring toplevel semicolons
+        parser::GetNextToken(state); // ignoring toplevel semicolons
         break;
       case static_cast<int>(Token::tok_def):
         //HandleDefinition();
@@ -29,16 +29,19 @@ static void MainLoop() {
 }
 
 int main() {
-  BinOpPrecedence['<'] = 10;
-  BinOpPrecedence['+'] = 20;
-  BinOpPrecedence['-'] = 20;
-  BinOpPrecedence['*'] = 40;
+  State n;
+  State& state = n; // hacky?
+
+  state.BinOpPrecedence['<'] = 10;
+  state.BinOpPrecedence['+'] = 20;
+  state.BinOpPrecedence['-'] = 20;
+  state.BinOpPrecedence['*'] = 40;
 
   // get first token
-  parser::GetNextToken();
+  parser::GetNextToken(state);
 
   // for now we will just call our MainLoop() function
-  MainLoop();
+  MainLoop(state);
 
   return 0;
 }

@@ -11,8 +11,8 @@
 #include <string>
 #include <vector>
 
-// LLVM uses their own make_unique in the tutorial. We'll reproduce it here,
-// but may not use it! The helper namespace might be useful anyway
+/// LLVM uses their own make_unique in the tutorial. We'll reproduce it here,
+/// but may not use it! The helper namespace might be useful anyway
 namespace helper {
   template <class T, class... Args>
   static
@@ -21,6 +21,20 @@ namespace helper {
   return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 };
 }
+
+/// encapsulate the global state in one struct to keep things clean...
+/// ...well as clean as passing state around can be anyway.
+struct State {
+  // manage precedence for binary operators
+  std::map<char, int> BinOpPrecedence;
+
+  // lexer things
+  std::string IdentifierStr; // filled if tok_identifier
+  double DoubleVal; // filled if tok_double
+
+  // parser state
+  int CurTok;
+};
 
 /**
  * Here we define all the tokens we need; add to this to add more!
@@ -39,9 +53,7 @@ enum class Token {
 // for now, we place these things in their own namespaces
 // to at the very least, avoid global namespace pollution
 namespace lexer {
-  std::string IdentifierStr; // filled if tok_identifier
-  double DoubleVal; // filled if tok_double
-  int GetTok();
+  int GetTok(State& state);
 }
 
 /// Our Abstract Syntax Tree (AST)
@@ -116,23 +128,14 @@ namespace ast {
 
 /// Our Parser
 namespace parser {
-  int CurTok;
-  int GetNextToken() { return CurTok = lexer::GetTok(); }
+  using namespace lexer;
+
+  int GetNextToken(State& state);
 
   /// Error handlers
-  std::unique_ptr<ast::ExprAST> Error(const std::string& errstr) {
-    std::cout << "Error: " << errstr << std::endl;
+  std::unique_ptr<ast::ExprAST> Error(const std::string& errstr);
 
-    return nullptr;
-  }
-
-  std::unique_ptr<ast::PrototypeAST> ErrorProto(const std::string& errstr) {
-    Error(errstr);
-
-    return nullptr;
-  }
+  std::unique_ptr<ast::PrototypeAST> ErrorProto(const std::string& errstr);
 }
 
-// manage precedence for binary operators
-std::map<char, int> BinOpPrecedence;
 
