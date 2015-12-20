@@ -136,6 +136,15 @@ namespace parser {
   std::unique_ptr<ast::ExprAST> Error(const std::string& errstr);
 
   std::unique_ptr<ast::PrototypeAST> ErrorProto(const std::string& errstr);
+
+  /// Now we handle our grammar productions.
+  /// Each production has a function to parse it.
+
+  /// DoubleExpr ::= Double
+  std::unique_ptr<ast::ExprAST> ParseDoubleExpr(State& state);
+
+  /// ParenExpr ::= '(' expression ')'
+  std::unique_ptr<ast::ExprAST> ParseParenExpr(State& state);
 }
 
 
