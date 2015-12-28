@@ -46,3 +46,40 @@ std::unique_ptr<ast::ExprAST> ParseParenExpr(State& state) {
 
   return V;
 }
+
+std::unique_ptr<ast::ExprAST> ParseIdentifierExpr(State& state) {
+  std::string IdName = state.IdentifierStr;
+
+  parser::GetNextToken(state); // eat id
+
+  if (state.CurTok != '(') {
+    return std::make_unique<ast::VariableExprAST>(std::move(IdName));
+  }
+
+  parser::GetNextToken(state); // eat the '('
+
+  std::vector<std::unique_ptr<ast::ExprAST>> Args;
+
+  if (state.CurTok != ')') {
+    while (1) {
+      if (const auto& Arg = parser::ParseExpression(state)) {
+        Args.push_back(std::move(Arg));
+      } else {
+        return nullptr;
+      }
+
+      if (state.CurTok == ')') {
+        break;
+      }
+
+      if (state.CurTok != ',') {
+        return parser::Error(std::string("Expected ')' or ',' in argument list"));
+      }
+      parser::GetNextToken(state);
+    }
+  }
+
+  parser::GetNextToken(state); // eat the ')'
+
+  return std::make_unique<ast::CallExprAST>(IdName, std::move(Args));
+}

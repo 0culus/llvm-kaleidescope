@@ -7,6 +7,8 @@
 #include "global.h"
 
 /// Top ::= Definition | External | Expression | ';'
+// TODO: move this code somewhere else; it doesn't make as much sense here
+// TODO: now that I think about it.
 static void MainLoop(State& state) {
   while (1) {
     std::cout << "ready> " << std::endl;
